@@ -1,0 +1,39 @@
+{
+  "name": "teste",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^20.0.1",
+    "browserify": "^17.0.0",
+    "cucumber": "^6.0.7",
+    "cypress": "^13.6.3",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "tsify": "^5.0.4"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/src/**/**/*.steps.js",
+    "filterSpecs": true,
+    "omitFiltered": true,
+    "json": {
+      "enabled": true,
+      "formatter": "cypress/reports/json/cucumber-json-formatter",
+      "output": "cypress/reports/json/cucumber-report.json"
+    },
+    "messages": {
+      "enabled": true,
+      "output": "cypress/reports/messages/cucumber-messages.ndjson"
+    }
+  },
+  "devDependencies": {
+    "@types/cypress-cucumber-preprocessor": "^4.0.5",
+    "@types/node": "^20.11.7",
+    "typescript": "^5.3.3"
+  }
+}
