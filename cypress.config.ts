@@ -21,8 +21,11 @@ async function setupNodeEvents(
 
 export default defineConfig({
     e2e: {
-        baseUrl: 'https://www.google.com',
+        baseUrl: 'http://10.52.28.148:5173/',
         specPattern: '**/*.feature',
         setupNodeEvents,
+        watchForFileChanges: false,
+        viewportWidth: 1280,
+        viewportHeight: 720,
     },
 })
