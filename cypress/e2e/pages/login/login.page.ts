@@ -1,53 +1,60 @@
-import { elements } from "../login/login.elements";
-import usuarios from "../../../fixtures/usuarios.json";
-//import { swagger } from "../../../api/swagger";
+import { elements } from "./elements";
+import acesso from '../../../fixtures/usuarios.json';
 
-export default new class loginPage {
-  acessarPaginaInicial() {
-    cy.visit("/");
-  }
+class LoginPage {
 
-  /**
-   * @param usuario - usuário a ser inserido no campo de login
-   * @param senha - senha a ser inserida no campo de senha
-   */
+    acessaeSocial(){
+        cy.visit('/')
+    }
 
-  autenticarUsuario(
-    usuario: string = usuarios.master.usuario,
-    senha: string = usuarios.master.senha
-  ) {
-    this.inserirUsuário(usuario);
-    this.inserirSenha(senha);
-  }
+    insereUsuarioSenha(){
+        this.verificaTelaLoginCarregada()
+        cy.get(elements.usuario).type(acesso.master.usuario, {log : false})
+        cy.get(elements.senha).type(acesso.master.senha, {log : false})
+        cy.get(elements.btnAcessar).click()
+    }  
 
-  /**
-   * @param usuario - usuário a ser inserido no campo de login
-   */
+    logarEsocial(){ //skipLogin = false
+        // if(skipLogin){
+        //     cy.commandGetItenLocalStorage('token').then((token) => {
+        //         cy.log('GLOBAL COMMAND' , token)
+        //         if(token === null) {
+        //             cy.commandRequestAutenticar()
+        //         }  
+        //     }) 
+        //     cy.visit('/s2200')     
+        // }
+        // else{
+            this.acessaeSocial()
+            this.insereUsuarioSenha()    
+        // }
+    }
 
-  inserirUsuário(usuario: string) {
-    cy.get(elements.inputUsuario).type(usuario);
-  }
+    verificaTelaLoginCarregada(){
+        cy.get(elements.imagemEsocial).should("be.visible")
+    }
 
-  /**
-   * @param senha - senha a ser inserida no campo de senha
-   */
+    insereUsuarioSenhaIncorreto(){
+        this.verificaTelaLoginCarregada()
+        cy.get(elements.usuario).type("112233")
+        cy.get(elements.senha).type("QAsenhaTeste123")
+        cy.get(elements.btnAcessar).click()
+    }
+    
+    clicaInputUsuarioSenha(){
+        cy.get(elements.usuario).click()
+        cy.get(elements.senha).click()
+        cy.get(elements.imagemEsocial).click()
+    }
 
-  inserirSenha(senha: string) {
-    cy.get(elements.inputSenha).type(senha);
-  }
+    verificaMensagensValidacao(){
+        cy.contains(elements.msgUsuario)
+        cy.contains(elements.msgSenha)
+    }
 
-  clicarBotaoEntrar() {
-    cy.intercept("POST", swagger.auth.login).as("login");
-    cy.get(elements.botaoEntrar).click();
-  }
-
-  validarMensagemErro() {
-    cy.get(elements.mensagem).contains("Usuário ou senha inválidos");
-  }
-
-  validarAutenticacao() {
-    cy.wait("@login").then((interception) => {
-      expect(interception.response.statusCode).to.eq(200);
-    });
-  }
-};
+    verificaMensagemUsuarioSenhaInvalidos(){
+        cy.contains(elements.msgUsuarioSenhaInvalidos).should('be.visible')
+        cy.get(elements.btnModalOk).click()
+    }
+}
+export default new LoginPage();

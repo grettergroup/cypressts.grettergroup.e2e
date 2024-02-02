@@ -2,6 +2,7 @@ import { defineConfig } from 'cypress'
 import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
 import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor'
 import createEsbuildPlugin from '@badeball/cypress-cucumber-preprocessor/esbuild'
+import host from './cypress/fixtures/host.json'
 
 async function setupNodeEvents(
     on: Cypress.PluginEvents,
@@ -21,11 +22,12 @@ async function setupNodeEvents(
 
 export default defineConfig({
     e2e: {
-        baseUrl: 'http://10.52.28.148:5173/',
-        specPattern: '**/*.feature',
         setupNodeEvents,
+        baseUrl: host.url,
+        specPattern: '**/*.feature',
         watchForFileChanges: false,
         viewportWidth: 1280,
         viewportHeight: 720,
+        defaultCommandTimeout: 15000,
     },
 })
