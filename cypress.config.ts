@@ -26,6 +26,7 @@ export default defineConfig({
         baseUrl: host.url,
         specPattern: '**/*.feature',
         watchForFileChanges: false,
+        screenshotsFolder: 'cypress/reports/screenshots',
         viewportWidth: 1280,
         viewportHeight: 720,
         defaultCommandTimeout: 15000,

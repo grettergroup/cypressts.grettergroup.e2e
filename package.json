@@ -4,6 +4,7 @@
   "description": "BDD, Cypress + Cucumber + Typescript",
   "main": "",
   "scripts": {
+    "script": "cypress run --browser chrome & node cypress.report.js && start cypress/reports/report-html/index.html",
     "cypress:open": "cypress open",
     "pretest": "rm -rf cypress/screenshots cypress/videos",
     "test": "cypress run",
@@ -28,8 +29,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@badeball/cypress-cucumber-preprocessor": "^18.0.5",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "cucumber-json-report-formatter": "^0.1.4",
     "cypress": "^13.6.1"
   },
   "devDependencies": {
@@ -44,15 +46,23 @@
     "eslint-plugin-n": "^16.6.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
+    "multiple-cucumber-html-reporter": "^3.6.2",
     "typescript": "^5.3.3"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": false,
+    "commonPath": "cypress/e2e/features",
+    "outputPath": "cypress/reports/cucumber-messages.json",
     "stepDefinitions": [
       "cypress/e2e/steps/**/*.ts"
     ],
+    "json": {
+      "enabled": true,
+      "formatter": "cypress/reports/json/cucumber-json-formatter",
+      "output": "cypress/reports/json/cucumber-report.json"
+    },
     "html": {
-      "enabled": true
+      "enabled": false
     }
   }
 }

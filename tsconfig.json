@@ -22,6 +22,8 @@
   },
   "include": [
     "**/*.ts",
-    "cypress.report.mjs"
+    "cypress.report.mjs",
+    "cypress.report.js",
+    "cypress.report.js"
   ]
 }

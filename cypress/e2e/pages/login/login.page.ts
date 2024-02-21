@@ -3,18 +3,18 @@ import acesso from '../../../fixtures/usuarios.json';
 
 class LoginPage {
 
-    acessaeSocial(){
+    acessaeSocial() {
         cy.visit('/')
     }
 
-    insereUsuarioSenha(){
+    insereUsuarioSenha() {
         this.verificaTelaLoginCarregada()
-        cy.get(elements.usuario).type(acesso.master.usuario, {log : false})
-        cy.get(elements.senha).type(acesso.master.senha, {log : false})
+        cy.get(elements.usuario).type(acesso.master.usuario, { log: false })
+        cy.get(elements.senha).type(acesso.master.senha, { log: false })
         cy.get(elements.btnAcessar).click()
-    }  
+    }
 
-    logarEsocial(){ //skipLogin = false
+    logarEsocial() { //skipLogin = false
         // if(skipLogin){
         //     cy.commandGetItenLocalStorage('token').then((token) => {
         //         cy.log('GLOBAL COMMAND' , token)
@@ -25,34 +25,34 @@ class LoginPage {
         //     cy.visit('/s2200')     
         // }
         // else{
-            this.acessaeSocial()
-            this.insereUsuarioSenha()    
+        this.acessaeSocial()
+        this.insereUsuarioSenha()
         // }
     }
 
-    verificaTelaLoginCarregada(){
+    verificaTelaLoginCarregada() {
         cy.get(elements.imagemEsocial).should("be.visible")
     }
 
-    insereUsuarioSenhaIncorreto(){
+    insereUsuarioSenhaIncorreto() {
         this.verificaTelaLoginCarregada()
         cy.get(elements.usuario).type("112233")
         cy.get(elements.senha).type("QAsenhaTeste123")
         cy.get(elements.btnAcessar).click()
     }
-    
-    clicaInputUsuarioSenha(){
+
+    clicaInputUsuarioSenha() {
         cy.get(elements.usuario).click()
         cy.get(elements.senha).click()
         cy.get(elements.imagemEsocial).click()
     }
 
-    verificaMensagensValidacao(){
+    verificaMensagensValidacao() {
         cy.contains(elements.msgUsuario)
         cy.contains(elements.msgSenha)
     }
 
-    verificaMensagemUsuarioSenhaInvalidos(){
+    verificaMensagemUsuarioSenhaInvalidos() {
         cy.contains(elements.msgUsuarioSenhaInvalidos).should('be.visible')
         cy.get(elements.btnModalOk).click()
     }
